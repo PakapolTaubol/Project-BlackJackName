@@ -97,7 +97,7 @@ function stay() {
 // draw cards
 function drawCard(arr, yourPoint, countAce) {
   let codeCard = deck.shift(); // 6-T
-  let srcCard = "/src/assets/All-card-final/" + codeCard + ".png"; // getPicture
+  let srcCard = "../public/img/" + codeCard + ".png"; // getPicture
   arr.push(srcCard);
   let point = codeCard.split("-")[0]; // "6-T" >> ["6", "T"] >> 6
   // point === "A" ? yourPoint.value + 11 > 21 ? point = 1 : (point = 11, countAce.value++) : isNaN(point) ? point = 10 : point;
