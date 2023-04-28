@@ -1,64 +1,29 @@
+# project-blackjackname
 
-# Project BlackJack
+This template should help get you started developing with Vue 3 in Vite.
 
-BlackJack หรือเกม 21 เกมไพ่ที่เก่าแก่ และยังเป็นที่นิยมในปัจจุบัน
+## Recommended IDE Setup
 
-แรงบันดาลใจในการพัฒนาแอป
-มาจากสมาชิกในกลุ่มเคยเล่มเกมไพ่ทั้งที่เป็นไพ่ในชีวิตจริงและไพ่ในเกม(เกมไพ่ไม่ใช่การพนัน) และสนใจขั้นตอนการทำงานของแอพเพราะคิดว่ามีความซับซ้อนและสนุกไปในตัว จึงปรึกษากับเพื่อนๆในกลุ่ม เรื่องทำเกมไพ่กัน และได้ข้อตกลงกันว่าอยากทำเกม Blackjack เนื่องจากเป็นเกมที่ขั้นตอนการทำงานซับซ้อนน้อย และเหมาะที่จะเป็น Project เริ่มต้นของทุกคน
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## รายชื่อนักศึกษา
+## Customize configuration
 
-| Name | Student ID |  Member’s Responsibility | Percentage |
-| - | - | - | :-: |
-| นายณัช พูลสวัสดิ์ | 64130500019 | Background , รูป Deck , หน้าเริ่มเกม , Function : drawcard | 20% |
-| นายธนชาติ บุญฤทธิวรรณ | 64130500029 | Background , CSS,  Function : newGame , drawCard, ช่วยเสริมfunction อื่นๆ ให้สมบูรณ์  | 20% |
-| นายธนาดล แสงสว่าง | 64130500035 | ดูแลเรื่องการทำ UI , Responsive เป็นหลัก , เขียนฟังก์ชั่น | 20% | 
-| นายพิชญะ จันทรศรีวงศ์ | 64130500059 | ออกเเบบ UI App , ทำรูปการ์ด , navbar , responsive | 20% |
-| นายภคพล ทาอุบล | 64130500062 | Function เกี่ยวกับการเล่น BlackJack BuildDeck , ShuffleDeck , Hit , Stay | 20% |
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## คู่มือการใช้งาน
-**กฎการเล่น BlackJack**
-เกมนี้คือเกม BlackJack หรือ 21
-เป้าหมายของเราในการเล่น คือ ผู้เล่น (Player) เอาชนะเจ้ามือ  Dealer จะจั่วไพ่ให้คนละ 2 ใบ โดยที่ไพ่ของ Player
-จะหงายทั้ง 2 ใบ แต่ Dealer จะคว่ำไพ่ตัวเองลง 1 ใบ เกมนี้เล่นกับจิตวิทยา จะชนะ Dealer ได้ต้องแต้มให้เยอะกว่า หรือ ลุ้นให้ Dealer
-แต้มเกิน 21
+## Project Setup
 
-            
-**อธิบายการเล่น**
-- HIT เป็นการขอไพ่เพิ่มจากทาง Dealer โดยจะนับแต้มไพ่ที่เพิ่มเข้ามาปกติ โดยเราต้องระวังไม่ให้แต้มเราเกิน
-21 ไม่งั้นจะเป็นการ BUST หรือแต้มเสียและทันที 
-- STAY เหมือนการกดยืนยันไพ่เพื่อวัดผลแพ้ชนะกับ Dealer โดย Dealer
-จะเริ่มจั่วไพ่ของตนเองถ้าหากตนเองแต้มน้อยกว่า 17 แต่ถ้า Dealer มีแต้มที่ 17-21 Dealer จะไม่มีการจั่วไพ่เพิ่ม
+```sh
+npm install
+```
 
-**การนับแต้ม**
-- ไพ่เลข ตั้งแต่ 2-10 แต้มจะนับตามเลข
-- ไพ่หน้าคน J, Q, K จะนับ 10 แต้มเท่ากันหมด
-- ไพ่ A หรือ Ace เป็นไพ่ที่ทำให้ได้เปรียบมากที่สุด เพราะจะเป็นได้ทั้ง 1 แต้มหรือ 11 แต้มก็ได้โดยถ้าหากผลรวมของแต้มไม่เกิน 21 ไพ่ A จะมีค่า 11 แต้ม แต่ถ้าหากเกิน 21 ไพ่ A จะลดค่าตัวเองเหลือแค่ 1 แต้ม
+### Compile and Hot-Reload for Development
 
-การดำเนินเกม
-วางเดิมพัน -> เจ้ามือแจกไพ่ -> ผู้เล่นเล่นไพ่ในมือ -> เจ้ามือเล่นไพ่ในมือ -> วัดผลการเดิมพัน
+```sh
+npm run dev
+```
 
-## อ้างอิง
-Card : www.unsplash.com <br/>
-Web Icon : https://pixabay.com/th/vectors/%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%80%e0%b8%a5%e0%b9%88%e0%b8%99%e0%b9%84%e0%b8%9e%e0%b9%88-%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%8c%e0%b8%94-%e0%b8%a1%e0%b8%b2%e0%b8%a2%e0%b8%b2%e0%b8%81%e0%b8%a5-%e0%b9%82%e0%b8%9b%e0%b9%8a%e0%b8%81%e0%b9%80%e0%b8%81%e0%b8%ad%e0%b8%a3%e0%b9%8c-2886284/
- <br/>
-Setting Icon : https://icones.js.org/collection/system-uicons?s=setting
- <br/>
-Font : https://www.dafont.com/carnivalee-freakshow.font?text=Blackjack
- <br/>
-Music : https://pixabay.com/th/music/search/casino/ <br/>
+### Compile and Minify for Production
 
-## Features
-- buildDeck สร้าง deck ไพ่
-- shuffleDeck สับ deck ไพ่
-- drawCard จั่วไพ่ , นับเพิ่มคะแนน
-- hit and stay 
-- showTextPopup แสดงข้อความแพ้ / ชนะ
-- newGame สำหรับเริ่มเกมในตาใหม่
-- resetEveryThing รีเซทค่า
-- startGame เริ่มเกม
-- MenuOpen เปิด / ปิด เมนูสำหรับการใช้งาน
-- quit ออกเกม
-- on/off music เปิด / ปิด เสียงเพลง
-
-
+```sh
+npm run build
+```
