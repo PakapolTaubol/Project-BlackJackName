@@ -5,7 +5,7 @@ import BlackJackGame from '../components/BlackJackGame.vue';
  
 <template>
     <div>
-        <BlackJackGame />
+        <BlackJackGame/>
     </div>
 </template>
  

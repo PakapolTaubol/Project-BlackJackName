@@ -5,7 +5,6 @@ import BlackJackGame from "./components/BlackJackGame.vue";
 <template>
   <div>
     <RouterView/>
-    
   </div>
 </template>
  

@@ -137,48 +137,40 @@ function resetEveryThing() {
 </script>
 
 <template>
-    <div class="w-full h-screen bg-gray-700">
+    <div>
         <div>
             <!-- Dealer -->
-            <div class="w-full pt-6">
-                <div class="flex justify-center space-x-5" ref="imgCardDealer">
-                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" class="w-32" />
-                    <img v-else :src="firstCard" class="w-32" />
-                    <img v-for="card in dealerArr" :src="card" class="w-32" />
+            <div>
+                <div ref="imgCardDealer">
+                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" />
+                    <img v-else :src="firstCard" />
+                    <img v-for="card in dealerArr" :src="card" />
                     <!-- popup -->
-                    <div v-show="!hitButtonPressed" class="popStatus absolute border-solid bg-white px-24 py-4 text-3xl">
+                    <div v-show="!hitButtonPressed">
                         {{ textPopup }}
                     </div>
                 </div>
             </div>
-            <h1 class="flex justify-center text-white font-bold text-xl py-4"></h1>
 
             <!-- Button -->
-            <div class="w-full flex justify-center space-x-8 h-8">
-                <button type="button"
-                    class="px-6 bg-green-500 hover:bg-green-600 active:bg-green-800 text-white font-bold text-lg text-center rounded-lg"
-                    @click="hit" :disabled="!hitButtonPressed">
+            <div>
+                <button type="button" @click="hit" :disabled="!hitButtonPressed">
                     HIT
                 </button>
-                <button type="button"
-                    class="px-6 bg-red-500 hover:bg-red-600 active:bg-red-800 text-white font-bold text-lg text-center rounded-lg"
-                    @click="stay" :disabled="!hitButtonPressed">
+                <button type="button" @click="stay" :disabled="!hitButtonPressed">
                     STAY
                 </button>
             </div>
-            <div v-if="!hitButtonPressed" class="flex justify-center mt-5">
-                <button type="button"
-                    class="px-6 py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-800 text-white font-bold text-lg text-center rounded-lg "
-                    @click="newGame">
+            <div v-if="!hitButtonPressed">
+                <button type="button" @click="newGame">
                     New Game
                 </button>
             </div>
 
             <!-- Player -->
-            <div class="w-full">
-                <h1 class="flex justify-center text-white font-bold text-xl py-4"></h1>
-                <div class="flex justify-center space-x-5" ref="imgCardPlayer">
-                    <img v-for="card in playerArr" :src="card" class="w-32" />
+            <div>
+                <div ref="imgCardPlayer">
+                    <img v-for="card in playerArr" :src="card" />
                 </div>
             </div>
         </div>
