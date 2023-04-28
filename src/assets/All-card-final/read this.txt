@@ -1,4 +1,0 @@
-A Animal
-T Technology
-N Nature
-C Car
