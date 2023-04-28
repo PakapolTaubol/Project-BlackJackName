@@ -137,14 +137,14 @@ function resetEveryThing() {
 </script>
 
 <template>
-    <div>
-        <div class="flex">
+    <div class="w-screen h-screen bg-gray-600">
+        <div class="flex justify-center flex-col w-auto h-auto">
             <!-- Dealer -->
             <div class="flex justify-center">
-                <div ref="imgCardDealer">
-                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" class="h-auto w-36" />
-                    <img v-else :src="firstCard" class="h-auto w-36" />
-                    <img v-for="card in dealerArr" :src="card" class="h-auto w-36" />
+                <div ref="DealerCard" class="inline-flex w-auto h-auto">
+                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" class="h-auto w-40" />
+                    <img v-else :src="firstCard" class="h-auto w-40" />
+                    <img v-for="card in dealerArr" :src="card" class="h-auto w-40" />
                     <!-- popup -->
                     <div v-show="!hitButtonPressed">
                         {{ textPopup }}
@@ -153,24 +153,24 @@ function resetEveryThing() {
             </div>
 
             <!-- Button -->
-            <div>
+            <div class="flex justify-center">
                 <button type="button" @click="hit" :disabled="!hitButtonPressed">
-                    HIT
+                    <p class="text-2xl mx-10">HIT</p>
                 </button>
                 <button type="button" @click="stay" :disabled="!hitButtonPressed">
-                    STAY
+                    <p class="text-2xl mx-10">STAY</p>
                 </button>
             </div>
-            <div v-if="!hitButtonPressed">
+            <div v-if="!hitButtonPressed" class="flex justify-center">
                 <button type="button" @click="newGame">
                     New Game
                 </button>
             </div>
 
             <!-- Player -->
-            <div>
-                <div ref="imgCardPlayer">
-                    <img v-for="card in playerArr" :src="card" class="h-auto w-36" />
+            <div class="flex justify-center">
+                <div ref="PlayerCard" class="inline-flex w-auto h-auto">
+                    <img v-for="card in playerArr" :src="card" class="h-auto w-40" />
                 </div>
             </div>
         </div>
