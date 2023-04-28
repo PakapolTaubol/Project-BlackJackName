@@ -138,13 +138,13 @@ function resetEveryThing() {
 
 <template>
     <div>
-        <div>
+        <div class="flex">
             <!-- Dealer -->
-            <div>
+            <div class="flex justify-center">
                 <div ref="imgCardDealer">
-                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" />
-                    <img v-else :src="firstCard" />
-                    <img v-for="card in dealerArr" :src="card" />
+                    <img v-if="hitButtonPressed" src="../assets/img/back_card.png" class="h-auto w-36" />
+                    <img v-else :src="firstCard" class="h-auto w-36" />
+                    <img v-for="card in dealerArr" :src="card" class="h-auto w-36" />
                     <!-- popup -->
                     <div v-show="!hitButtonPressed">
                         {{ textPopup }}
@@ -170,7 +170,7 @@ function resetEveryThing() {
             <!-- Player -->
             <div>
                 <div ref="imgCardPlayer">
-                    <img v-for="card in playerArr" :src="card" />
+                    <img v-for="card in playerArr" :src="card" class="h-auto w-36" />
                 </div>
             </div>
         </div>

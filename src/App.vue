@@ -4,7 +4,7 @@ import BlackJackGame from "./components/BlackJackGame.vue";
  
 <template>
   <div>
-    <RouterView/>
+    <RouterView />
   </div>
 </template>
  

@@ -3,9 +3,8 @@
 </script>
  
 <template>
-    <p class="text-xl">Hello World</p>
     <div>
-        <RouterLink to="BlackJack" class="text-xl">Game Black Jack</RouterLink>
+        <RouterLink to="BlackJack" class="text-2xl text-blue-700">[ Game Black Jack ]</RouterLink>
     </div>
 </template>
  
