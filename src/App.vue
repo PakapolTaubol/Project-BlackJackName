@@ -36,7 +36,7 @@ window.onload = function () {
 // build Deck
 function buildDeck() {
   let points = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-  let types = ["A", "C", "N", "T"];
+  let types = ["C", "D", "H", "S"];
   for (const type of types) {
     for (const point of points) {
       deck.push(point + "-" + type); // A-A , 2-A , ... , K-T
@@ -97,7 +97,7 @@ function stay() {
 // draw cards
 function drawCard(arr, yourPoint, countAce) {
   let codeCard = deck.shift(); // 6-T
-  let srcCard = "./img/" + codeCard + ".png"; // getPicture
+  let srcCard = "./cards/" + codeCard + ".png"; // getPicture
   arr.push(srcCard);
   let point = codeCard.split("-")[0]; // "6-T" >> ["6", "T"] >> 6
   // point === "A" ? yourPoint.value + 11 > 21 ? point = 1 : (point = 11, countAce.value++) : isNaN(point) ? point = 10 : point;
