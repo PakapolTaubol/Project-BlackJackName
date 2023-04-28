@@ -1,156 +1,128 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import settingIcon from "./components/icons/SystemUiconsSettings.vue";
 
-//variable HTML
-let bg_blur = ref(true);
+const bg_blur = ref(true);
 const close_BG = () => {
   bg_blur.value = false;
   onOff.value = true
 };
-// Status Show Hit is Available or not
-let showHit = ref(true);
 
-// Variable JS
+const hitButtonPressed = ref(true);
+
 let deck = [], dealerArr = [], playerArr = [], firstCard = [];
-// Player
-let playerPoint = ref(0);
-let playerCountAce = ref(0);
-let playerScore = ref(0);
-// Dealer
-let dealerPoint = ref(0);
-let dealerCountAce = ref(0);
-let dealerScore = ref(0);
-// Game
-let numRound = ref(1);
-let textPopup = ref("");
-let openSetting = ref(false);
+const playerPoint = ref(0), playerCountAce = ref(0), playerScore = ref(0);
+const dealerPoint = ref(0), dealerCountAce = ref(0), dealerScore = ref(0);
+const numRound = ref(1), textPopup = ref(""), openSetting = ref(false);
 
-// Window call function
-window.onload = function () {
+
+onMounted(() => {
   buildDeck();
   shuffleDeck();
   startGame();
-};
+})
 
-// build Deck
 function buildDeck() {
-  let points = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-  let types = ["C", "D", "H", "S"];
+  const points = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+  const types = ["C", "D", "H", "S"];
   for (const type of types) {
     for (const point of points) {
-      deck.push(point + "-" + type); // A-A , 2-A , ... , K-T
+      deck.push(point + "-" + type);
     }
   }
 }
 
-// shuffle Deck 
 function shuffleDeck() {
   for (let i = 0; i < deck.length; i++) {
-    let j = Math.floor(Math.random() * deck.length); // random 52 card
+    let j = Math.floor(Math.random() * deck.length);
     let temp = deck[i];
     deck[i] = deck[j];
     deck[j] = temp;
   }
 }
 
-// Start Game 
 function startGame() {
-  drawCard(firstCard, dealerPoint, dealerCountAce) // Hide FirstCard
-  drawCard(dealerArr, dealerPoint, dealerCountAce) // Dealer Card
+  drawCard(firstCard, dealerPoint, dealerCountAce);
+  drawCard(dealerArr, dealerPoint, dealerCountAce);
   for (let i = 0; i < 2; i++) {
-    drawCard(playerArr, playerPoint, playerCountAce) // Player Card
+    drawCard(playerArr, playerPoint, playerCountAce);
   }
   showTextPopup();
 }
 
-// hit button and draw cards
 function hit() {
   if (playerArr.length <= 5 && playerPoint.value < 21) {
     drawCard(playerArr, playerPoint, playerCountAce);
   }
   if (playerPoint.value === 21) {
-    showHit.value = false;
+    hitButtonPressed.value = false;
     textPopup.value = "Black Jack";
-    playerScore.value++
-  }
-  else if (playerPoint.value > 21) {
-    showHit.value = false;
+    playerScore.value++;
+  } else if (playerPoint.value > 21) {
+    hitButtonPressed.value = false;
     textPopup.value = "Player BUST";
     stay();
   }
 }
 
-// stop draw 
 function stay() {
-  showHit.value = false;
+  hitButtonPressed.value = false;
   if (textPopup.value !== "Player BUST" && dealerPoint.value < 17) {
     while (dealerPoint.value < 17 && dealerArr.length <= 4) {
-      drawCard(dealerArr, dealerPoint, dealerCountAce)
-    } if (dealerPoint.value > 21) {
+      drawCard(dealerArr, dealerPoint, dealerCountAce);
+    }
+    if (dealerPoint.value > 21) {
       textPopup.value = "Win";
       playerScore.value++;
     }
-  } showTextPopup();
+  }
+  showTextPopup();
 }
 
-// draw cards
 function drawCard(arr, yourPoint, countAce) {
-  let codeCard = deck.shift(); // 6-T
-  let srcCard = "./cards/" + codeCard + ".png"; // getPicture
+  const codeCard = deck.shift(); // 6-T
+  const srcCard = `./cards/${codeCard}.png`; // getPicture
   arr.push(srcCard);
   let point = codeCard.split("-")[0]; // "6-T" >> ["6", "T"] >> 6
-  // point === "A" ? yourPoint.value + 11 > 21 ? point = 1 : (point = 11, countAce.value++) : isNaN(point) ? point = 10 : point;
   if (point === "A") {
-    if (yourPoint.value + 11 > 21) {
-      point = 1;
-    } else {
-      point = 11;
-      countAce.value++;
-    }
-  } else if (isNaN(point)) {
-    point = 10;
+    point = yourPoint.value + 11 > 21 ? 1 : (countAce.value++, 11);
+  } else {
+    point = isNaN(point) ? 10 : parseInt(point);
   }
-  if (countAce.value === 1 && yourPoint.value + parseInt(point) > 21) {
+  if (countAce.value === 1 && yourPoint.value + point > 21) {
     countAce.value--;
     point -= 10;
   }
-  yourPoint.value += parseInt(point);
+  yourPoint.value += point;
 }
 
-// BlackJack Win Lose Tie
 function showTextPopup() {
-  if (showHit.value === true) {
+  if (hitButtonPressed.value) {
     if (playerPoint.value === 21 && dealerPoint.value === 21) {
-      showHit.value = false;
+      hitButtonPressed.value = false;
       textPopup.value = "Tie Black Jack";
-    }
-    else if (playerPoint.value === 21) {
-      showHit.value = false;
+    } else if (playerPoint.value === 21) {
+      hitButtonPressed.value = false;
       textPopup.value = "Black Jack";
-      playerScore.value++
+      playerScore.value++;
     }
-  }
-  else if (showHit.value === false) {
-    if (textPopup.value !== "Win") {
-      if (textPopup.value === "Player BUST") {
-        dealerScore.value++;
-      } else if (dealerPoint.value > playerPoint.value) {
-        textPopup.value = "Lose";
-        dealerScore.value++;
-      } else if (dealerPoint.value < playerPoint.value) {
-        textPopup.value = "Win";
-        playerScore.value++;
-      } else {
-        textPopup.value = "Tie";
-      }
+  } else if (textPopup.value !== "Win") {
+    if (textPopup.value === "Player BUST") {
+      dealerScore.value++;
+    } else if (dealerPoint.value > playerPoint.value) {
+      textPopup.value = "Lose";
+      dealerScore.value++;
+    } else if (dealerPoint.value < playerPoint.value) {
+      textPopup.value = "Win";
+      playerScore.value++;
+    } else {
+      textPopup.value = "Tie";
     }
   }
 }
 
-// new game
 function newGame() {
-  showHit.value = true;
+  hitButtonPressed.value = true;
   numRound.value++;
   resetEveryThing();
   startGame();
@@ -161,7 +133,6 @@ function newGame() {
   }
 }
 
-// reset game
 function resetEveryThing() {
   playerArr = [];
   dealerArr = [];
@@ -171,29 +142,25 @@ function resetEveryThing() {
   textPopup.value = "";
 }
 
-// setting menu
 function MenuOpen() {
   openSetting.value = !openSetting.value;
 }
 
-// music
-let onOff = ref(true);
+const onOff = ref(true);
 const music = new Audio('/music/bg_music.mp3')
 const playPauseSong = () => {
   onOff.value = !onOff.value
 }
 
-
 const quit = () => {
-  bg_blur.value = true
-  openSetting.value = false
-  showHit.value = true
-  newGame()
-  numRound.value = 0
-  playerScore.value = 0
-  dealerScore.value = 0
-
-  onOff.value = false
+  bg_blur.value = true;
+  openSetting.value = false;
+  hitButtonPressed.value = true;
+  newGame();
+  numRound.value = 0;
+  playerScore.value = 0;
+  dealerScore.value = 0;
+  onOff.value = false;
 }
 </script>
 
@@ -329,7 +296,7 @@ const quit = () => {
             <div class="flex text-xl max-md:text-base">PLAYER: {{ playerPoint }}</div>s
             <div class="flex w-16"></div>
             <div class="flex text-xl max-md:text-base">
-              DEALER: <span v-show="!showHit">{{ dealerPoint }}</span>
+              DEALER: <span v-show="!hitButtonPressed">{{ dealerPoint }}</span>
             </div>
           </div>
         </div>
@@ -337,11 +304,12 @@ const quit = () => {
       <!-- Dealer -->
       <div class="w-full pt-6">
         <div class="flex justify-center space-x-5" ref="imgCardDealer">
-          <img v-if="showHit" src="./assets/img/back_card.png" class="w-32" />
+          <img v-if="hitButtonPressed" src="./assets/img/back_card.png" class="w-32" />
           <img v-else :src="firstCard" class="w-32" />
           <img v-for="card in dealerArr" :src="card" class="w-32" />
           <!-- popup -->
-          <div v-show="!showHit && !bg_blur" class="popStatus absolute border-solid bg-slate-700 px-24 py-4 text-3xl">
+          <div v-show="!hitButtonPressed && !bg_blur"
+            class="popStatus absolute border-solid bg-slate-700 px-24 py-4 text-3xl">
             {{ textPopup }}
           </div>
         </div>
@@ -352,16 +320,16 @@ const quit = () => {
       <div class="w-full flex justify-center space-x-8 h-8">
         <button type="button"
           class="px-6 bg-green-500 hover:bg-green-600 active:bg-green-800 text-white font-bold text-lg text-center rounded-lg"
-          @click="hit" :disabled="!showHit">
+          @click="hit" :disabled="!hitButtonPressed">
           HIT
         </button>
         <button type="button"
           class="px-6 bg-red-500 hover:bg-red-600 active:bg-red-800 text-white font-bold text-lg text-center rounded-lg"
-          @click="stay" :disabled="!showHit">
+          @click="stay" :disabled="!hitButtonPressed">
           STAY
         </button>
       </div>
-      <div v-if="!showHit" class="flex justify-center mt-5">
+      <div v-if="!hitButtonPressed" class="flex justify-center mt-5">
         <button type="button"
           class="px-6 py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-800 text-white font-bold text-lg text-center rounded-lg "
           @click="newGame">
