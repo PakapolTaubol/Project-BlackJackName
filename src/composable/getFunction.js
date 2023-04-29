@@ -1,20 +1,17 @@
-function buildDeck(deck) {
-    const points = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    const types = ["C", "D", "H", "S"];
+function buildDeck() {
+    const deck = [];
+    const points = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    const types = ['C', 'D', 'H', 'S'];
     for (const type of types) {
         for (const point of points) {
-            deck.push(point + "-" + type);
+            deck.push(`${point}-${type}`);
         }
     }
-}
-
-function shuffleDeck(deck) {
     for (let i = 0; i < deck.length; i++) {
-        let j = Math.floor(Math.random() * deck.length);
-        let temp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = temp;
+        const j = Math.floor(Math.random() * deck.length);
+        [deck[i], deck[j]] = [deck[j], deck[i]];
     }
+    return deck;
 }
 
 function startGameBlackJack(deck, player, dealer, firstCard) {
@@ -44,15 +41,6 @@ function drawCard(deck, user) {
 
 function hit(deck, user) {
     drawCard(deck, user);
-    // if (user.value.point === 21) {
-    //     hitButtonPressed.value = false;
-    //     textPopup.value = "Black Jack";
-    //     playerScore.value++;
-    // } else if (player.point > 21) {
-    //     hitButtonPressed.value = false;
-    //     textPopup.value = "Player BUST";
-    //     stay();
-    // }
 }
 
 function stay(deck, user) {
@@ -64,32 +52,6 @@ function stay(deck, user) {
         if (dealerPoint.value > 21) {
             textPopup.value = "Win";
             playerScore.value++;
-        }
-    }
-    showTextPopup();
-}
-
-function showTextPopup() {
-    if (hitButtonPressed.value) {
-        if (player.point === 21 && dealerPoint.value === 21) {
-            hitButtonPressed.value = false;
-            textPopup.value = "Tie Black Jack";
-        } else if (player.point === 21) {
-            hitButtonPressed.value = false;
-            textPopup.value = "Black Jack";
-            playerScore.value++;
-        }
-    } else if (textPopup.value !== "Win") {
-        if (textPopup.value === "Player BUST") {
-            dealerScore.value++;
-        } else if (dealerPoint.value > player.point) {
-            textPopup.value = "Lose";
-            dealerScore.value++;
-        } else if (dealerPoint.value < player.point) {
-            textPopup.value = "Win";
-            playerScore.value++;
-        } else {
-            textPopup.value = "Tie";
         }
     }
 }
@@ -117,12 +79,10 @@ function resetEveryThing() {
 
 export default {
     buildDeck,
-    shuffleDeck,
     startGameBlackJack,
     hit,
     stay,
     drawCard,
-    showTextPopup,
     newGame,
     resetEveryThing
 };
