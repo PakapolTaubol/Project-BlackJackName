@@ -66,7 +66,7 @@ watch(() => result.value, (newResult) => {
 </script>
 
 <template>
-    <div class="w-screen h-screen bg-gray-600">
+    <div class="w-screen h-screen bg-gray-700">
         <div class="flex justify-center flex-col w-auto h-auto">
             <div>
                 <p>{{ player.point }}</p>
@@ -74,7 +74,7 @@ watch(() => result.value, (newResult) => {
             </div>
 
             <!-- Dealer -->
-            <div class="flex justify-center">
+            <div class="flex justify-center py-2">
                 <div ref="DealerCard" class="inline-flex w-auto h-auto">
                     <img v-if="!(isBusted && isStayed)" :src="dealerFaceDownCard" class="h-auto w-40" />
                     <img v-else :src="dealerFaceDownCard" class="h-auto w-40" />
@@ -83,17 +83,23 @@ watch(() => result.value, (newResult) => {
             </div>
 
             <!-- Button -->
-            <div class="flex justify-center">
-                <button type="button" @click="getFunction.drawCard(deck, player)" :disabled="isBusted || isStayed">
-                    <p class="text-2xl mx-10">HIT</p>
-                </button>
-                <button type="button" @click="toStaying" :disabled="isBusted || isStayed">
-                    <p class="text-2xl mx-10">STAY</p>
-                </button>
+            <div class="flex justify-center py-6">
+                <div class="px-2">
+                    <button type="button" @click="getFunction.drawCard(deck, player)" :disabled="isBusted || isStayed"
+                        class="px-2 py-2 bg-green-500 hover:bg-green-600 active:bg-green-800 text-white font-bold text-lg text-center rounded-lg">
+                        <p class="text-2xl mx-10">HIT</p>
+                    </button>
+                </div>
+                <div class="px-2">
+                    <button type="button" @click="toStaying" :disabled="isBusted || isStayed"
+                        class="px-2 py-2 bg-red-500 hover:bg-red-600 active:bg-red-800 text-white font-bold text-lg text-center rounded-lg">
+                        <p class="text-2xl mx-10">STAY</p>
+                    </button>
+                </div>
             </div>
 
             <!-- Player -->
-            <div class="flex justify-center">
+            <div class="flex justify-center py-2">
                 <div ref="PlayerCard" class="inline-flex w-auto h-auto">
                     <img v-for="card in player.array" :src="card" class="h-auto w-40" />
                 </div>
