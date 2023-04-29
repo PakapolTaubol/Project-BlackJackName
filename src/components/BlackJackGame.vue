@@ -40,6 +40,7 @@ const toStaying = () => {
 onMounted(() => {
     getFunction.startGameBlackJack(deck, player.value, dealer.value)
     dealerFaceDownCard.value = dealer.value.array.shift()
+    console.log(dealerFaceDownCard.value);
 });
 
 watch(() => player.value.point, (newPoint) => {
@@ -66,17 +67,17 @@ watch(() => result.value, (newResult) => {
 </script>
 
 <template>
-    <div class="w-screen h-screen bg-gray-700">
+    <div class="w-full">
         <div class="flex justify-center flex-col w-auto h-auto">
-            <div>
-                <p>{{ player.point }}</p>
-                <p>{{ dealer.point }}</p>
+            <div >
+                <p class="text-2xl text-white">{{ player.point }}</p>
+                <p class="text-2xl text-white">{{ dealer.point }}</p>
             </div>
 
             <!-- Dealer -->
             <div class="flex justify-center py-2">
                 <div ref="DealerCard" class="inline-flex w-auto h-auto">
-                    <img v-if="!(isBusted && isStayed)" :src="dealerFaceDownCard" class="h-auto w-40" />
+                    <img v-if="!(isBusted || isStayed)" src="../assets/image/backcard.png" class="h-auto w-40" />
                     <img v-else :src="dealerFaceDownCard" class="h-auto w-40" />
                     <img v-for="card in dealer.array" :src="card" class="h-auto w-40" />
                 </div>
