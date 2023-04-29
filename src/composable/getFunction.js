@@ -14,9 +14,12 @@ function buildDeck() {
     return deck;
 }
 
-function startGameBlackJack(deck, player, dealer, firstCard) {
-    drawCard(deck, firstCard);
-    drawCard(deck, dealer);
+function startGameBlackJack(deck, player, dealer) {
+    // drawCard(deck, firstCard);
+    // drawCard(deck, dealer);
+    for (let i = 0; i < 2; i++) {
+        drawCard(deck, dealer);
+    }
     for (let i = 0; i < 2; i++) {
         drawCard(deck, player);
     }
@@ -39,50 +42,29 @@ function drawCard(deck, user) {
     user.point += point;
 }
 
-function hit(deck, user) {
-    drawCard(deck, user);
-}
+// function newGame() {
+//     hitButtonPressed.value = true;
+//     numRound.value++;
+//     resetEveryThing();
+//     // startGame();
+//     if (deck.value.length <= 26) {
+//         deck.value = [];
+//         buildDeck();
+//         shuffleDeck();
+//     }
+// }
 
-function stay(deck, user) {
-    hitButtonPressed.value = false;
-    if (textPopup.value !== "Player BUST" && dealerPoint.value < 17) {
-        while (dealerPoint.value < 17 && dealerArr.value.length <= 4) {
-            drawCard(dealerArr, dealerPoint, dealerCountAce);
-        }
-        if (dealerPoint.value > 21) {
-            textPopup.value = "Win";
-            playerScore.value++;
-        }
-    }
-}
-
-function newGame() {
-    hitButtonPressed.value = true;
-    numRound.value++;
-    resetEveryThing();
-    // startGame();
-    if (deck.value.length <= 26) {
-        deck.value = [];
-        buildDeck();
-        shuffleDeck();
-    }
-}
-
-function resetEveryThing() {
-    player.array = [];
-    dealerArr.value = [];
-    firstCard.value = [];
-    player.point = 0;
-    dealerPoint.value = 0;
-    textPopup.value = "";
-}
+// function resetEveryThing() {
+//     player.array = [];
+//     dealerArr.value = [];
+//     firstCard.value = [];
+//     player.point = 0;
+//     dealerPoint.value = 0;
+//     textPopup.value = "";
+// }
 
 export default {
     buildDeck,
     startGameBlackJack,
-    hit,
-    stay,
     drawCard,
-    newGame,
-    resetEveryThing
 };
