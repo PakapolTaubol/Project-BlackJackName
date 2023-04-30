@@ -7,7 +7,7 @@ const isBusted = ref(false);
 const isStayed = ref(false);
 const result = ref('')
 
-const dealerFaceDownCard = ref([])
+let dealerFaceDownCard = []
 const dealer = ref({
     array: [],
     point: 0,
@@ -38,20 +38,24 @@ const toStaying = () => {
 }
 
 onMounted(() => {
-    getFunction.startGameBlackJack(deck, player.value, dealer.value)
-    dealerFaceDownCard.value = dealer.value.array.shift()
-    console.log(dealerFaceDownCard.value);
+    getFunction.startGameBlackJack(deck, player.value, dealer.value);
+    dealerFaceDownCard.push(dealer.value.array.shift());
 });
 
 watch(() => player.value.point, (newPoint) => {
     if (newPoint > 21) {
         isBusted.value = true;
         result.value = 'Bust'
+    } else if (newPoint === 21) {
+        isBusted.value = true;
+        result.value = 'BlackJack'
     }
 });
 
 watch(() => result.value, (newResult) => {
     switch (newResult) {
+        case 'BlackJack': alert('BlackJack')
+            break;
         case 'Bust': alert('Bust')
             break;
         case 'Dealer Bust': alert('Dealer Bust')
@@ -69,9 +73,13 @@ watch(() => result.value, (newResult) => {
 <template>
     <div class="w-full">
         <div class="flex justify-center flex-col w-auto h-auto">
-            <div >
-                <p class="text-2xl text-white">{{ player.point }}</p>
-                <p class="text-2xl text-white">{{ dealer.point }}</p>
+            <div class="mx-4 my-2 flex justify-between">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    ADVICE ?
+                </button>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    SETTING
+                </button>
             </div>
 
             <!-- Dealer -->
@@ -81,19 +89,25 @@ watch(() => result.value, (newResult) => {
                     <img v-else :src="dealerFaceDownCard" class="h-auto w-40" />
                     <img v-for="card in dealer.array" :src="card" class="h-auto w-40" />
                 </div>
+                <p class="text-2xl text-white">{{ dealer.point }}</p>
             </div>
 
-            <!-- Button -->
+            <!-- CEN -->
             <div class="flex justify-center py-6">
+                <!-- HIT -->
                 <div class="px-2">
                     <button type="button" @click="getFunction.drawCard(deck, player)" :disabled="isBusted || isStayed"
-                        class="px-2 py-2 bg-green-500 hover:bg-green-600 active:bg-green-800 text-white font-bold text-lg text-center rounded-lg">
+                        class="px-2 py-2 bg-green-600 active:bg-green-900 text-white font-bold text-lg text-center rounded-lg">
                         <p class="text-2xl mx-10">HIT</p>
                     </button>
                 </div>
+                <div class="px-20">
+                    <p class="text-white font-extrabold">BLACK JACK BY CODENAME</p>
+                </div>
+                <!-- STAY -->
                 <div class="px-2">
                     <button type="button" @click="toStaying" :disabled="isBusted || isStayed"
-                        class="px-2 py-2 bg-red-500 hover:bg-red-600 active:bg-red-800 text-white font-bold text-lg text-center rounded-lg">
+                        class="px-2 py-2 bg-red-600 active:bg-red-900 text-white font-bold text-lg text-center rounded-lg">
                         <p class="text-2xl mx-10">STAY</p>
                     </button>
                 </div>
@@ -104,6 +118,7 @@ watch(() => result.value, (newResult) => {
                 <div ref="PlayerCard" class="inline-flex w-auto h-auto">
                     <img v-for="card in player.array" :src="card" class="h-auto w-40" />
                 </div>
+                <p class="text-2xl text-white">{{ player.point }}</p>
             </div>
         </div>
     </div>
