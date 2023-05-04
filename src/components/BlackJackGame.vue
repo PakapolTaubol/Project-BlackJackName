@@ -6,6 +6,8 @@ const deck = getFunction.buildDeck();
 const isBusted = ref(false);
 const isStayed = ref(false);
 const result = ref('')
+const music = ref('/src/assets/sound/musicBlackJack.mp3')
+const playSound = ref(true)
 
 let dealerFaceDownCard = []
 const dealer = ref({
@@ -72,6 +74,7 @@ watch(() => result.value, (newResult) => {
 
 <template>
     <div class="w-full">
+        <audio :src="music" autoplay v-if="playSound"></audio>
         <div class="flex justify-center flex-col w-auto h-auto">
             <div class="mx-4 my-2 flex justify-between">
                 <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -97,7 +100,7 @@ watch(() => result.value, (newResult) => {
                 <!-- HIT -->
                 <div class="px-2">
                     <button type="button" @click="getFunction.drawCard(deck, player)" :disabled="isBusted || isStayed"
-                        class="px-2 py-2 bg-green-600 active:bg-green-900 text-white font-bold text-lg text-center rounded-lg">
+                        class="px-2 py-2 bg-green-600 active:bg-green-700 text-white font-bold text-lg text-center rounded-lg">
                         <p class="text-2xl mx-10">HIT</p>
                     </button>
                 </div>
@@ -107,7 +110,7 @@ watch(() => result.value, (newResult) => {
                 <!-- STAY -->
                 <div class="px-2">
                     <button type="button" @click="toStaying" :disabled="isBusted || isStayed"
-                        class="px-2 py-2 bg-red-600 active:bg-red-900 text-white font-bold text-lg text-center rounded-lg">
+                        class="px-2 py-2 bg-red-600 active:bg-red-700 text-white font-bold text-lg text-center rounded-lg">
                         <p class="text-2xl mx-10">STAY</p>
                     </button>
                 </div>
