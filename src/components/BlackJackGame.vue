@@ -7,7 +7,7 @@ const isBusted = ref(false);
 const isStayed = ref(false);
 const result = ref('')
 
-const music = new Audio('/src/assets/sound/musicBlackJack.mp3')
+const music = new Audio('/sound/musicBlackJack.mp3')
 const playSound = ref(true)
 const musicBTN = () => {
     playSound.value = !playSound.value

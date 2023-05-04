@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const music = new Audio('/src/assets/sound/musicHome.mp3')
+const music = new Audio('/sound/musicHome.mp3')
 const playSound = ref(true)
 const musicBTN = () => {
     playSound.value = !playSound.value
