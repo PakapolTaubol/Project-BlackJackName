@@ -6,8 +6,12 @@ const deck = getFunction.buildDeck();
 const isBusted = ref(false);
 const isStayed = ref(false);
 const result = ref('')
-const music = ref('/src/assets/sound/musicBlackJack.mp3')
+
+const music = new Audio('/src/assets/sound/musicBlackJack.mp3')
 const playSound = ref(true)
+const musicBTN = () => {
+    playSound.value = !playSound.value
+}
 
 let dealerFaceDownCard = []
 const dealer = ref({
@@ -74,12 +78,17 @@ watch(() => result.value, (newResult) => {
 
 <template>
     <div class="w-full">
-        <audio :src="music" autoplay v-if="playSound"></audio>
         <div class="flex justify-center flex-col w-auto h-auto">
             <div class="mx-4 my-2 flex justify-between">
                 <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                     ADVICE ?
                 </button>
+                <div class="text-white">
+                    Music :
+                    <button @click="musicBTN" :class="playSound ? music.play() : music.pause()">
+                        {{ playSound ? 'On' : 'Off' }}
+                    </button>
+                </div>
                 <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                     SETTING
                 </button>
